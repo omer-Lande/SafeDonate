@@ -1,0 +1,15 @@
+/* Home.css */
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 150vh; /* Adjust this if needed */
+  text-align: center;
+}
+
+.home-title {
+  font-size: 3em;
+  color: blue;
+  margin-top: 50px; /* Adjust this if needed */
+}

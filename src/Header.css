@@ -1,0 +1,98 @@
+/* Header.css */
+.header {
+  position: fixed; /* Fixed position to stay at the top */
+  top: 0; /* Positioned at the top */
+  left: 0; /* Positioned at the left */
+  width: 100%; /* Full width */
+  background-color: rgb(111, 198, 217); /* Background color */
+  z-index: 1000; /* Ensure header stays on top */
+}
+
+.header-container {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between elements */
+  align-items: center; /* Center items vertically */
+  padding: 20px; /* Add padding to the header */
+}
+
+.header-title {
+  margin: 0;
+  font-size: 2em;
+}
+
+.header-title a {
+  color: blue;
+  text-decoration: none;
+}
+
+.header-nav {
+  flex: 1; /* Allow it to take up space */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center the navigation */
+  align-items: center; /* Center items vertically */
+}
+
+.header-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Use flexbox for layout */
+}
+
+.header-nav ul li {
+  margin: 0 10px;
+}
+
+.header-nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-size: 1em;
+}
+
+.hamburger {
+  cursor: pointer; /* Make the icon clickable */
+  font-size: 1.5em; /* Adjust font size as needed */
+  z-index: 1100; /* Ensure the burger icon appears above other content */
+}
+
+/* Adjust positions to be inside the header */
+.hamburger {
+  margin-left: auto; /* Push to the right */
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #9571ce;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.active {
+  transform: translateX(0); /* Show sidebar when active */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 20px;
+}
+
+.sidebar ul li {
+  margin: 50px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.content-below-header {
+  position: relative; /* Ensure proper positioning */
+  z-index: 950;
+  padding-top: 60px; /* Adjust this based on your header height */
+}
