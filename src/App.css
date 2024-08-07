@@ -5,7 +5,7 @@
   padding: 2rem;
   text-align: center;
 }
-/*
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -198,4 +198,5 @@
 
 .form-container button.back-btn {
   margin-top: 20px;
+}
 }

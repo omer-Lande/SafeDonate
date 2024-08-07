@@ -1,24 +1,27 @@
-/* Login.jsx */
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+// src/Login.jsx
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add login logic here
-    console.log('Email:', email, 'Password:', password);
+    console.log("Email:", email, "Password:", password);
   };
 
   return (
     <div className="form-container">
-      <h2>Login</h2>
+      <h2>{t("login")}</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email</label>
+          <label>{t("email")}</label>
           <input
             type="email"
             value={email}
@@ -27,7 +30,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <label>Password</label>
+          <label>{t("password")}</label>
           <input
             type="password"
             value={password}
@@ -35,16 +38,16 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">{t("login")}</button>
       </form>
       <div>
-        <Link to="/signup">Don't have an account? Sign Up</Link>
+        <Link to="/signup">{t("no_account")}</Link>
       </div>
       <div>
-        <button onClick={() => navigate('/')}>Back</button>
+        <button onClick={() => navigate("/")}>{t("back")}</button>
       </div>
     </div>
   );
-}
+};
 
 export default Login;
