@@ -4,12 +4,15 @@ import { useTranslation } from "react-i18next";
 import "./Home.css";
 import AssociationCrusel from "./components/AssociationCrusel";
 import GoogleCustomSearch from "./components/Cse";
+import Cookies from 'js-cookie';
+import axios from "axios"
 
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -22,14 +25,19 @@ const Home = () => {
           throw new Error(`Http error! status: ${response.status}`);
         }
         const jsonData = await response.json();
-        
+        setData(jsonData.result.records);
 
-        const registeredOrganization = jsonData.result.records
-          .filter((record) => record["סטטוס עמותה"] === "רשומה")
-          .map((record) => record["שם עמותה בעברית"]);
-        // setData(registeredOrganization);
-        console.log(registeredOrganization)
-        setData(registeredOrganization);
+        // fetch user info from token
+        const token = Cookies.get("token");
+        if(token){
+          const tokenResponse = await axios.post("http://localhost:3000/users/getToken", { token: token })
+                if (tokenResponse.status === 200) {
+                  setUser(tokenResponse.data);
+                } else {
+                  setError(error);
+                  console.log("Bad request. You have problem with token verifacation.");
+                }
+              }
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -38,7 +46,6 @@ const Home = () => {
     };
     fetchData();
   }, []);
-
   const getWelcomeMessage = () => {
     return i18n.language === "he"
       ? "ברוכים הבאים ל SafeDonate"
@@ -53,7 +60,8 @@ const Home = () => {
         <p>Error: {error.message}</p>
       ) : (
         <div>
-          <h1 className="home-title text-3xl font-extrabold">{getWelcomeMessage()}</h1>
+          <h3>{user.email} is connected</h3>
+          <h1 className="home-title p-12 text-4xl  font-extrabold">{getWelcomeMessage()} {user.email}</h1>
           <div>
           {/* <div className="grid-container"> */}
             {/* {data.map((name, index) => (
@@ -62,7 +70,7 @@ const Home = () => {
               </div>
             ))} */}
             {/* <GoogleCustomSearch /> */}
-            <AssociationCrusel dataList={data}/>
+            <AssociationCrusel dataList={data} userId={user._id}/>
           </div>
         </div>
       )}

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import axios from "axios"
 import "./Login.css";
 
 const Login = () => {
@@ -10,9 +11,21 @@ const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Add login logic here
+    
+    const response = await axios.post("http://localhost:3000/users/login", { email: email, password: password })
+              if (response.status === 200) {
+                const token = response.data.token;
+                const expires = new Date(Date.now() + 3600000); // 1 hour from now
+                document.cookie = `token=${token}; expires=${expires.toUTCString()}; path=/`;
+                document.cookie = `token=${token}; expires = in 1h for ${Date.now}`;
+    
+                navigate("/", { state: { id: email } }); 
+              } else {
+                console.log("Bad request. Please check your credentials.");
+              }
+
     console.log("Email:", email, "Password:", password);
   };
 

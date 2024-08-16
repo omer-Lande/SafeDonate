@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import axios from "axios"
 import "./SignUp.css";
 
 const SignUp = () => {
@@ -11,13 +12,26 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
+    console.log("submit")
     e.preventDefault();
     if (password !== confirmPassword) {
       alert(t("password_mismatch"));
       return;
     }
     // Add signup logic here
+    const response = await axios.post("http://localhost:3000/users/signup", { email: email, password: password })
+              if (response.status === 200) {
+                const token = response.data.token;
+                const expires = new Date(Date.now() + 3600000); // 1 hour from now
+                document.cookie = `token=${token}; expires=${expires.toUTCString()}; path=/`;
+                document.cookie = `token=${token}; expires = in 1h for ${Date.now}`;
+                navigate("/", { state: { id: email } }); 
+              } else {
+                console.log("Bad request. Please check your credentials.");
+              }
+
+
     console.log("Email:", email, "Password:", password);
   };
 
