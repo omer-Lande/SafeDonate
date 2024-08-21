@@ -29,6 +29,7 @@ const Home = () => {
 
         // fetch user info from token
         const token = Cookies.get("token");
+        console.log(token)
         if(token){
           const tokenResponse = await axios.post("http://localhost:3000/users/getToken", { token: token })
                 if (tokenResponse.status === 200) {
@@ -60,8 +61,8 @@ const Home = () => {
         <p>Error: {error.message}</p>
       ) : (
         <div>
-          <h3>{user.email} is connected</h3>
-          <h1 className="home-title p-12 text-4xl  font-extrabold">{getWelcomeMessage()} {user.email}</h1>
+          <h3>{user?.email} is connected</h3>
+          <h1 className="home-title p-12 text-4xl  font-extrabold">{getWelcomeMessage()} {user?.email}</h1>
           <div>
           {/* <div className="grid-container"> */}
             {/* {data.map((name, index) => (
@@ -70,7 +71,7 @@ const Home = () => {
               </div>
             ))} */}
             {/* <GoogleCustomSearch /> */}
-            <AssociationCrusel dataList={data} userId={user._id}/>
+            <AssociationCrusel dataList={data} userId={user?._id}/>
           </div>
         </div>
       )}
